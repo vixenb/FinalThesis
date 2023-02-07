@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Music-event-dev",
+    "slug": "Music-event-dev",
+    "version": "0.2.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/04828da3-5c4e-4e28-9db5-07b501209aa2"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mstart.eventsdev"
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/icon.png",
+        "backgroundColor": "#643c61"
+      },
+      "package": "com.mstart.eventsdev",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAFAifQU2xMTEuIa3bW_rPan00IUPckpRI"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./src/assets/icon.png"
+    },
+    "description": "",
+    "extra": {
+      "eas": {
+        "projectId": "b0102635-cce7-4bf3-8e95-d7c6f0b99291"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "322691730824",
+    "project_id": "expopushnotification-47fe1",
+    "storage_bucket": "expopushnotification-47fe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322691730824:android:fcfe52d9f9f1deffd77e3d",
+        "android_client_info": {
+          "package_name": "com.mstart.eventsdev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322691730824-7ca4u5cdikqkfu0trtdle0vub82cobol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Np2_A0K-_OkoGKqs7T_HrMubsFtoebw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322691730824-7ca4u5cdikqkfu0trtdle0vub82cobol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
