@@ -25,6 +25,7 @@ import { Colors } from "./src/styles";
 // Push notifications
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import { getArtistDetails, getArtists, getSchedule, getStages, getTokens, saveToken } from "./src/endpoints/events";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -35,25 +36,25 @@ Notifications.setNotificationHandler({
 });
 
 // Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: "default",
-    title: "Original Title",
-    body: "And here is the body!",
-    data: { someData: "goes here" }
-  };
+// async function sendPushNotification(expoPushToken) {
+//   const message = {
+//     to: expoPushToken,
+//     sound: "default",
+//     title: "Original Title",
+//     body: "And here is the body!",
+//     data: { someData: "goes here" }
+//   };
 
-  await fetch("https://exp.host/--/api/v2/push/send", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Accept-encoding": "gzip, deflate",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(message)
-  });
-}
+//   await fetch("https://exp.host/--/api/v2/push/send", {
+//     method: "POST",
+//     headers: {
+//       Accept: "application/json",
+//       "Accept-encoding": "gzip, deflate",
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(message)
+//   });
+// }
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -108,13 +109,24 @@ export default function App() {
   // Notifications
   // eslint-disable-next-line quotes
   const [expoPushToken, setExpoPushToken] = useState('');
+  const [tokens, setTokens] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
+    // saveToken("Test")
+    // .then((data) => {
+    //   // data.forEach(e => {
+    //   //   if (e.token_id === expoPushToken) {
+    //   //     console.log(expoPushToken + "Ima");
+    //   //   } else {
+    //   //     console.log("nema");
+    //   //   }
+    //   // });
+    //   console.log(data);
+    // })
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
@@ -129,51 +141,52 @@ export default function App() {
     };
   }, []);
   // End notifications
-  // const getStages = async () => {
-  //   await Events.getStages()
-  //     .then((json) => {
-  //       dispatch(createAction(actions.SET_STAGES, json.data.stage));
-  //     });
-  // };
+  
+  const getStages = async () => {
+    await Events.getStages()
+      .then((json) => {
+        dispatch(createAction(actions.SET_STAGES, json));
+      });
+  };
 
-  // const getSchedule = async () => {
-  //   await Events.getSchedule()
-  //     .then((json) => {
-  //       dispatch(createAction(actions.SET_SCHEDULE, json.data.schedules));
-  //     });
-  // };
+  const getSchedule = async () => {
+    await Events.getSchedule()
+      .then((json) => {
+        dispatch(createAction(actions.SET_SCHEDULE, json));
+      });
+  };
 
-  // const getArtists = async () => {
-  //   const favouriteArtists = JSON.parse(await getAsyncData());
-  //   dispatch(createAction(actions.SET_FAVOURITES, favouriteArtists));
+  const getArtists = async () => {
+    const favouriteArtists = JSON.parse(await getAsyncData());
+    dispatch(createAction(actions.SET_FAVOURITES, favouriteArtists));
 
-  //   customArtists = await Events.getArtists()
-  //     .then((json) => {
-  //       return Artists.setFavourites(json.data.artists, favouriteArtists);
-  //     });
+    customArtists = await Events.getArtists()
+      .then((json) => {
+        return Artists.setFavourites(json, favouriteArtists);
+      });
 
-  //   dispatch(createAction(actions.SET_ARTISTS, customArtists));
-  // };
+    dispatch(createAction(actions.SET_ARTISTS, customArtists));
+  };
 
   useEffect(() => {
-    setIsLoading(false);
-    // const myPromise = new Promise((resolve, reject) => {
-    //   resolve(getArtists());
-    // });
+    const myPromise = new Promise((resolve, reject) => {
+      resolve(getArtists());
+    });
 
-    // const promise1 = new Promise((resolve) => {
-    //   resolve(getStages());
-    // });
+    const promise1 = new Promise((resolve) => {
+      resolve(getStages());
+    });
 
-    // const promise2 = new Promise((resolve) => {
-    //   resolve(getSchedule());
-    // });
+    const promise2 = new Promise((resolve) => {
+      resolve(getSchedule());
+    });
 
-    // Promise.all([myPromise, promise1, promise2])
-    // .then(() => {
-    //   setIsLoading(false);
-    // });
+    Promise.all([myPromise, promise1, promise2])
+    .then(() => {
+      setIsLoading(false);
+    });
   }, []);
+
 
   if (isLoading) {
     return (
@@ -183,26 +196,21 @@ export default function App() {
     );
   }
 
-  // return (
-  //   <StoreContext.Provider value={{ dispatch, state }}>
-  //     <Navigator />
-  //   </StoreContext.Provider >
-
-  // );
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "space-around" }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
-      <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
-      />
-    </View>
+    <StoreContext.Provider value={{ dispatch, state }}>
+      <Navigator />
+    </StoreContext.Provider >
+
   );
+  // return (
+  //   <View style={{ flex: 1, alignItems: "center", justifyContent: "space-around" }}>
+  //     <Text>Your expo push token: {expoPushToken}</Text>
+  //     <Button
+  //       title="Press to Send Notification"
+  //       onPress={async () => {
+  //         await sendPushNotification(expoPushToken);
+  //       }}
+  //     />
+  //   </View>
+  // );
 }

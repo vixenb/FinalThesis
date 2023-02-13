@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, SafeAreaView, Dimensions, StyleSheet, Image } from "react-native";
 
 // Icons
@@ -40,24 +40,28 @@ const Schedule = ({ navigation }) => {
     state.schedule.map((event, index) => {
       // eslint-disable-next-line array-callback-return
       state.artists.map((artist) => {
-        if (artist.name.toUpperCase() === event.artist.toUpperCase()) {
+        if (artist.id === event.artist_id) {
           formatedEvent = {
             artistId: artist.id,
             key: event.id,
-            start: DateFormat.formatDateReverse(event.date_from.substr(0, 10)) + " " + DateFormat.formatLongTime(event.date_from.substr(11, 5)),
-            end: DateFormat.formatDateReverse(event.date_to.substr(0, 10)) + " " + DateFormat.formatLongTime(event.date_to.substr(11, 5)),
-            title: event.artist,
-            stage: event.stage,
-            image: artist.thumb,
+            start: event.date_from,
+            end: event.date_to,
+            title: event.Artist.name,
+            stage: event.Stage.stage1,
+            image: artist.image,
             favourites: artist.isFavourite
           };
           formatedEvents.push(formatedEvent);
         }
       });
     });
-
+    console.log(formatedEvents);
     return formatedEvents;
   };
+
+  useEffect(()=> {
+    formatEvents();
+  },[])
 
   const renderFavouriteStar = (item) => {
     let helper = 0;

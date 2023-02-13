@@ -33,6 +33,7 @@ const Artist = ({ navigation, route }) => {
 
   const artistId = route.params.artistId;
   const [selectedArtist, setSelectedArtist] = useState();
+  const [scheduleNew, setScheduleNew] = useState([]);
 
   useEffect(() => {
     dispatch(createAction(actions.START_LOADER));
@@ -40,13 +41,30 @@ const Artist = ({ navigation, route }) => {
     const getSelectedArtist = async () => {
       await Events.getArtistDetails(artistId)
         .then((json) => {
-          setSelectedArtist(json.data.artist);
+          setSelectedArtist(json);
         })
         .finally(() => {
           dispatch(createAction(actions.END_LOADER));
         });
     };
+
+    const getSelectedSchedule = () => {
+      state.schedule.forEach(e => {
+        if (e.artist_id === artistId) {
+          const date = {
+            "dateFrom" : e.date_from,
+            "dateTo" : e.date_to,
+            "stage" : e.Stage.stage1
+          }
+          // scheduleNew.push(date);
+          setScheduleNew(oldArray => [...oldArray, date]);
+        } 
+      });
+      console.log(scheduleNew);
+    }
+
     getSelectedArtist();
+    getSelectedSchedule();
   }, []);
 
   const storeAsyncData = async (data) => {
@@ -134,14 +152,14 @@ const Artist = ({ navigation, route }) => {
             styles.topBox,
             SharedStyles.layout.standardVerticalPadding
           ]}>
-            <Image source={{ uri: selectedArtist.img }} style={styles.boxImage} />
+            <Image source={{ uri: selectedArtist[0].image }} style={styles.boxImage} />
             <View style={[
               styles.header
             ]}>
               <View style={styles.mainHeader}>
-                <Text style={styles.mainHeaderLabel}>{selectedArtist.name}</Text>
+                <Text style={styles.mainHeaderLabel}>{selectedArtist[0].name}</Text>
                 <Pressable
-                  onPress={() => addToFavourites(selectedArtist)}
+                  onPress={() => addToFavourites(selectedArtist[0])}
                   style={({ pressed }) => [
                     {
                       opacity: pressed ? Colors.TOUCHABLE_OPACITY : 1
@@ -150,15 +168,15 @@ const Artist = ({ navigation, route }) => {
                   ]}>
                   {
                     // eslint-disable-next-line array-callback-return
-                    renderFavouriteStar(selectedArtist)
+                    renderFavouriteStar(selectedArtist[0])
                   }
                 </Pressable>
               </View>
 
               <ScrollView horizontal={true}>
                 {
-                  selectedArtist.schedule.map((s, index) => (
-                    <ArtistSchedule key={index} index={index} schedule={s} selectedArtist={selectedArtist} />
+                  scheduleNew.map((s, index) => (
+                    <ArtistSchedule key={index} index={index} schedule={s} selectedArtist={scheduleNew} />
                   ))
                 }
               </ScrollView>
@@ -172,7 +190,7 @@ const Artist = ({ navigation, route }) => {
               SharedStyles.layout.standardVerticalPadding
             ]}>
               <Text style={SharedStyles.typography.subtitile}>
-                {selectedArtist.about}
+                {selectedArtist[0].about}
               </Text>
             </View>
             <View style={[
@@ -180,31 +198,31 @@ const Artist = ({ navigation, route }) => {
             ]}>
 
               {
-                selectedArtist.links.length !== 0 &&
+                selectedArtist[0].facebooklink !== 0 &&
                   <Text style={styles.linkText}>{localization("links")}</Text>
 
               }
 
               {
-                selectedArtist.links.Web !== undefined &&
+                selectedArtist[0].twitterlink !== undefined &&
                   <Btn
                     press={() => navigation.navigate("Browser", {
-                      link: selectedArtist.links.Web
+                      link: selectedArtist[0].twitterlink
                     })}
                     style={[
                       styles.linksIcon,
                       SharedStyles.typography.centeredItem
                     ]}
                   >
-                    <MaterialCommunityIcons name="web" size={FONT_SIZE_TITLE_MD * 2} color={Colors.themeColor().colors.facebookBlue} />
+                    <MaterialCommunityIcons name="twitter" size={FONT_SIZE_TITLE_MD * 2} color={Colors.themeColor().colors.facebookBlue} />
                   </Btn>
               }
 
               {
-                selectedArtist.links.Facebook !== undefined &&
+                selectedArtist[0].facebooklink !== undefined &&
                   <Btn
                     press={() => navigation.navigate("Browser", {
-                      link: selectedArtist.links.Facebook
+                      link: selectedArtist[0].facebooklink
                     })}
                     style={[
                       styles.linksIcon,
@@ -216,10 +234,10 @@ const Artist = ({ navigation, route }) => {
               }
 
               {
-                selectedArtist.links.Instagram !== undefined &&
+                selectedArtist[0].instagramlink !== undefined &&
                    <Btn
                      press={() => navigation.navigate("Browser", {
-                       link: selectedArtist.links.Instagram
+                       link: selectedArtist[0].instagramlink
                      })}
                      style={[
                        styles.linksIcon,
@@ -229,21 +247,6 @@ const Artist = ({ navigation, route }) => {
                      <FontAwesome name="instagram" size={FONT_SIZE_TITLE_MD * 2} color={Colors.themeColor().colors.youtubeRed} />
                    </Btn>
               }
-
-              {
-                selectedArtist.links.Youtube !== undefined && <Btn
-                  press={() => navigation.navigate("Browser", {
-                    link: selectedArtist.links.Youtube
-                  })}
-                  style={[
-                    styles.linksIcon,
-                    SharedStyles.typography.centeredItem
-                  ]}
-                >
-                  <FontAwesome name="youtube-play" size={FONT_SIZE_TITLE_MD * 2} color={Colors.themeColor().colors.youtubeRed} />
-                </Btn>
-              }
-
             </View>
           </View>
         </View>
@@ -266,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.themeColor().colors.secondaryBackgroundColor
   },
   boxImage: {
-    width: windowWidth - 64,
+    width: windowWidth - 65,
     height: 250,
     alignSelf: "center",
     resizeMode: "cover"

@@ -37,40 +37,6 @@ import { StoreContext } from "../../store/reducer";
 // Actions
 import { actions, createAction } from "../../store/actions";
 
-// exampleData
-// export const DATAGRID = [
-//   {
-//     key: "1",
-//     value: "actress",
-//     favorites: "false",
-//     imageBW: require("../../assets/images/artists-bw/actressCB.png"),
-//     image: require("../../assets/images/artists/actress.png"),
-//     stage: "Main Stage",
-//     description: localization("aboutAfrojack"),
-//     start: "2021-02-22 10:00:00",
-//     end: "2021-02-22 11:00:00",
-//     webLink: "https://en.wikipedia.org/wiki/Actress_(musician)",
-//     facebookLink: "https://www.facebook.com/actressmusic/",
-//     instagramLink: "https://www.instagram.com/ghettovillian/",
-//     youtubeLink: "https://www.youtube.com/watch?v=t_5qdnKra9g&list=PLZ5bCluesRCQPnEajUuxHshLthem6nSlR&index=2"
-//   },
-//   {
-//     key: "2",
-//     value: "calexico",
-//     favorites: "false",
-//     imageBW: require("../../assets/images/artists-bw/calexicoCB.png"),
-//     image: require("../../assets/images/artists/calexico.png"),
-//     stage: "Main Stage",
-//     description: localization("aboutAfrojack"),
-//     start: "2021-02-22 11:05:00",
-//     end: "2021-02-22 12:05:00",
-//     webLink: "https://en.wikipedia.org/wiki/Calexico_(band)",
-//     facebookLink: "https://www.facebook.com/calexico/",
-//     instagramLink: "https://www.instagram.com/casadecalexico/",
-//     youtubeLink: "https://www.youtube.com/channel/UC66HWSL-hGJWfkHjqaUuQyw"
-//   }
-// ];
-
 const Artists = ({ navigation }) => {
   const store = useContext(StoreContext);
   const dispatch = store.dispatch;
@@ -129,7 +95,7 @@ const Artists = ({ navigation }) => {
   const renderGridItem = ({ item }) => (
     <ArtistGridItem
       name={item.name}
-      img={{ uri: item.thumb }}
+      img={{ uri: item.image }}
       press={() => navigation.navigate("Artist",
         {
           artistId: item.id
@@ -138,6 +104,9 @@ const Artists = ({ navigation }) => {
     />
   );
 
+  useEffect(()=> {
+    console.log(state.stages);
+  })
   const onPressLeftButton = () => {
     setGrid(true);
   };
@@ -287,7 +256,7 @@ const Artists = ({ navigation }) => {
                 <View style={{ marginRight: 0 }}>
                   <ArtistListItem
                     name={item.name}
-                    image={{ uri: item.thumb }}
+                    image={{ uri: item.image }}
                     press={() => navigation.navigate("Artist", {
 
                       artistId: item.id
@@ -309,10 +278,6 @@ const Artists = ({ navigation }) => {
         )
         }
       </SafeAreaView>
-      {/* TODO:
-          Cashless button prelazi preko zadnjeg izvodaca sto otezava
-          spremanje u favorita
-      */}
       <Btn
         press={openCashless}
         btncolor={Colors.themeColor().colors.primary}

@@ -139,7 +139,7 @@ const DayView = (props) => {
     state.stages.map((stage, index) => {
       let helperCounter = 0;
       props.events.map((e) => {
-        if (stage.name === e.stage && helperCounter === 0) {
+        if (stage.stage1 === e.stage && helperCounter === 0) {
           helperCounter++;
           stagesWithEvents.push(stage);
         }
@@ -169,7 +169,7 @@ const DayView = (props) => {
       }
 
       return packedEvents.map((event, i) => {
-        if (event.stage.toUpperCase() === stage.name.toUpperCase()) {
+        if (event.stage.toUpperCase() === stage.stage1.toUpperCase()) {
           const style = {
             height: event.height,
             width: eventWidth,
@@ -234,7 +234,7 @@ const DayView = (props) => {
             state.stages.map((stage, index) => {
               let helperCounter = 0;
               return props.events.map((s) => {
-                if (s.stage.toUpperCase() === stage.name.toUpperCase() && helperCounter === 0) {
+                if (s.stage.toUpperCase() === stage.stage1.toUpperCase() && helperCounter === 0) {
                   helperCounter++;
                   return (
                     <Pentagon
@@ -243,7 +243,7 @@ const DayView = (props) => {
                       eventWidth={ packedEvents.length === 1 ? 300 : eventWidth}
                       color={"#A47FC3"}
                       rotate={"180deg"}
-                      stage={stage.name}
+                      stage={stage.stage1}
                       space={space}
                       textColor={Colors.themeColor().colors.primaryTextColor}
                       pointerHeight={pointerHeight}

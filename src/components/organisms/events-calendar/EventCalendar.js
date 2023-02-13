@@ -104,7 +104,7 @@ const EventCalendar = ({
       let helperCounter = 0;
 
       item.map(event => {
-        if (stage.name === event.stage && helperCounter === 0) {
+        if (stage.stage1 === event.stage && helperCounter === 0) {
           helperCounter++;
           stagesWithEvents.push(stage);
         }
@@ -224,11 +224,11 @@ const EventCalendar = ({
         return (
           <View key={index}>
             <View style={{ marginHorizontal: 16 }}>
-              <Text style={{ color: Colors.themeColor().colors.primary, fontSize: 24 }}>{s.name}</Text>
+              <Text style={{ color: Colors.themeColor().colors.primary, fontSize: 24 }}>{s.stage1}</Text>
             </View>
             {
               item.map((event, i) => {
-                if (event.stage.toUpperCase() === s.name.toUpperCase()) {
+                if (event.stage.toUpperCase() === s.stage1.toUpperCase()) {
                   return (
                     <View key={i}>
                       <View style={{ borderTopColor: Colors.themeColor().colors.empty, borderTopWidth: 1, marginLeft: 16 }}>

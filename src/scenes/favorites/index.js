@@ -72,7 +72,7 @@ const Favorites = ({ navigation }) => {
 
   const onShare = () => {
     const data = getFavouriteArtists();
-    const img = data[0].thumb;
+    const img = data[0].image;
 
     FileSystem.downloadAsync(
       img,
@@ -96,7 +96,7 @@ const Favorites = ({ navigation }) => {
     const artistSchedule = [];
     // eslint-disable-next-line array-callback-return
     state.schedule.map((s) => {
-      if (item.name.toUpperCase() === s.artist.toUpperCase()) {
+      if (item.name.toUpperCase() === s.Artist.name.toUpperCase()) {
         artistSchedule.push(s);
       }
     });

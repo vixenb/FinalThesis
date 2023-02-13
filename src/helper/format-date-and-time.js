@@ -38,7 +38,7 @@ export const getTodaysDate = () => {
   const yyyy = today.getFullYear();
   const todayDate = yyyy + "-" + mm + "-" + dd;
   // return todayDate;
-  return "2021-08-07";
+  return "2023-04-20";
 };
 
 export const getCurrentTIme = () => {

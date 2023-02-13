@@ -21,13 +21,13 @@ const ArtistSchedule = ({ index, schedule, selectedArtist, textColor = Colors.th
     <View style={[styles.subHeader, { flexDirection: "row", paddingHorizontal: Typography.FONT_SIZE_TITLE_MD * 0.25 }]} >
 
       <View style={{ marginRight: Typography.FONT_SIZE_TITLE_MD * 0.5 }}>
-        <Text style={[styles.subHeaderLabel, { color: textColor }]}>{schedule.date_from.substr(0, 10)}.</Text>
-        <Text style={[styles.subHeaderLabel, { color: textColor }]}>{schedule.date_from.substr(11, 5)} - {schedule.date_to.substr(11, 5)}</Text>
-        <Text numberOfLines={1} style={[styles.subHeaderLabel, { width: Typography.FONT_SIZE_TITLE_MD * 4, color: textColor }]}>{schedule.stage}</Text>
+        <Text style={[styles.subHeaderLabel, { color: textColor }]}>{schedule.dateFrom.substr(0, 10)}.</Text>
+        <Text style={[styles.subHeaderLabel, { color: textColor }]}>{schedule.dateFrom.substr(11, 5)} - {schedule.dateTo.substr(11, 5)}</Text>
+        <Text numberOfLines={2} style={[styles.subHeaderLabel, { width: Typography.FONT_SIZE_TITLE_MD * 4, color: textColor }]}>{schedule.stage}</Text>
       </View>
 
       {
-        (selectedArtist.schedule.length > 1 && selectedArtist.schedule.length - 1 !== index) && (
+        (selectedArtist.length > 1 && selectedArtist.length - 1 !== index) && (
           <View style={{ backgroundColor: Colors.themeColor().colors.primaryBackgroundColor, width: 1, height: Typography.FONT_SIZE_TITLE_MD * 2.5 }}></View>
         )
       }

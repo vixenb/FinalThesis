@@ -1,83 +1,47 @@
 import * as Config from "../../configuration";
 
-// // Helpers
-// import { PersistentStorageHelper } from "../helpers";
 
-// https://test.mplatform.solutions/
-export const cashlessEnv = Config.getEnvVars();
-const appSlug = "eventwallet";
+export const eventEnv = Config.getEnvVars();
 
-const eventWallet = `${cashlessEnv.host}modules/eventwallet/api/v1`;
-
-const artistsView = `${eventWallet}/artists`;
-const artistDetails = `${eventWallet}/artists/details`;
-const scheduleView = `${eventWallet}/schedules`;
-const stagesView = `${eventWallet}/stages`;
+const artists = `${eventEnv.host}artist`;
+const schedule = `${eventEnv.host}schedules`;
+const stages = `${eventEnv.host}stage`;
+const token = `${eventEnv.host}tokens`;
 
 export const getArtists = async () => {
-  const bodyData = {
-    client_slug: cashlessEnv.CLIENT_SLUG
-  };
-
-  const response = await fetch(artistsView, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Language": "en",
-      "X-Authorization": cashlessEnv.xAuthorization
-    },
-    body: JSON.stringify(bodyData)
-  });
+  const response = await fetch(artists);
   return await response.json();
 };
 
-export const getArtistDetails = async (artistId) => {
-  const bodyData = {
-    id: artistId,
-    client_slug: cashlessEnv.CLIENT_SLUG
-  };
-
-  const response = await fetch(artistDetails, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Language": "en",
-      "X-Authorization": cashlessEnv.xAuthorization
-    },
-    body: JSON.stringify(bodyData)
-  });
+export const getArtistDetails = async (id) => {
+  const response = await fetch(`${artists}/${id}`);
   return await response.json();
 };
 
 export const getSchedule = async () => {
-  const bodyData = {
-    client_slug: cashlessEnv.CLIENT_SLUG,
-    app_slug: appSlug
-  };
-
-  const response = await fetch(scheduleView, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Language": "en",
-      "X-Authorization": cashlessEnv.xAuthorization
-    },
-    body: JSON.stringify(bodyData)
-  });
+  const response = await fetch(schedule);
   return await response.json();
 };
 
 export const getStages = async () => {
+  const response = await fetch(stages);
+  return await response.json();
+};
+
+export const getTokens = async () => {
+  const response = await fetch(token);
+  return await response.json();
+};
+
+export const saveToken = async (id) => {
   const bodyData = {
-    client_slug: cashlessEnv.CLIENT_SLUG
+    token_id: id
   };
 
-  const response = await fetch(stagesView, {
+  const response = await fetch(token, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "Content-Language": "en",
-      "X-Authorization": cashlessEnv.xAuthorization
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(bodyData)
   });

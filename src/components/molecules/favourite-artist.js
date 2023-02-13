@@ -63,7 +63,7 @@ const FavouriteArtistItem = ({ artist, schedule, press }) => {
 
       <View style={styles.rows}>
         <View>
-          <Image source={{ uri: artist.thumb }} style={styles.boxImage} />
+          <Image source={{ uri: artist.image }} style={styles.boxImage} />
         </View>
         <View style={styles.secondRow}>
           <View style={styles.header}>
