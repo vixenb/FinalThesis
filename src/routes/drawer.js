@@ -31,7 +31,7 @@ const rootNavigator = () => {
 
   const chooseMap = () => {
     //  Promjenom map[index] mijenja se mapa u navigaciji
-    const choosenMap = map[0];
+    const choosenMap = map[1];
 
     if (choosenMap === "map") return MapStack;
     else if (choosenMap === "mapOverlay") return MapOverlayStack;

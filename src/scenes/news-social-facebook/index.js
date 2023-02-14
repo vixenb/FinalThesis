@@ -9,7 +9,7 @@ const NewsSocialFacebook = () => {
     <SafeAreaView style={[
       SharedStyles.layout.flex
     ]}>
-      <WebView source={{ uri: "https://www.facebook.com/SuperUho.Festival/" }}
+      <WebView source={{ uri: "https://www.facebook.com/visitzagreb/" }}
         style={SharedStyles.typography.windowWidth} />
     </SafeAreaView>
   );

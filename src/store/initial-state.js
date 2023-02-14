@@ -3,5 +3,6 @@ export const initialState = {
   artists: [],
   stages: [],
   schedule: [],
-  favouriteArtists: []
+  favouriteArtists: [],
+  notifications: []
 };

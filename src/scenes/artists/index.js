@@ -65,9 +65,10 @@ const Artists = ({ navigation }) => {
 
   const openCashless = () => {
     DeepLink.openLink({
-      cashlessLink: "ewalletcashlessdemo://",
-      appName: "eWallet cashless demo",
-      appStoreId: "us",
+      cashlessLink: "fb://",
+      appName: "facebook",
+      appStoreId: "284882215",
+      appStoreLocale: "us",
       playStoreId: "com.mstart.ewallet_cashless_demo"
     });
   };
@@ -104,9 +105,6 @@ const Artists = ({ navigation }) => {
     />
   );
 
-  useEffect(()=> {
-    console.log(state.stages);
-  })
   const onPressLeftButton = () => {
     setGrid(true);
   };

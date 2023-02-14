@@ -60,7 +60,6 @@ const Artist = ({ navigation, route }) => {
           setScheduleNew(oldArray => [...oldArray, date]);
         } 
       });
-      console.log(scheduleNew);
     }
 
     getSelectedArtist();

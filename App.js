@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { View, ActivityIndicator, Platform, Text, Button } from "react-native";
+import { View, ActivityIndicator, Platform } from "react-native";
 // navigation
 import Navigator from "./src/routes/drawer";
 import 'expo-dev-client';
@@ -25,7 +25,8 @@ import { Colors } from "./src/styles";
 // Push notifications
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-import { getArtistDetails, getArtists, getSchedule, getStages, getTokens, saveToken } from "./src/endpoints/events";
+import { saveToken } from "./src/endpoints/events";
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -34,27 +35,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false
   })
 });
-
-// Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-// async function sendPushNotification(expoPushToken) {
-//   const message = {
-//     to: expoPushToken,
-//     sound: "default",
-//     title: "Original Title",
-//     body: "And here is the body!",
-//     data: { someData: "goes here" }
-//   };
-
-//   await fetch("https://exp.host/--/api/v2/push/send", {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Accept-encoding": "gzip, deflate",
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(message)
-//   });
-// }
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -70,7 +50,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }
@@ -88,6 +67,7 @@ async function registerForPushNotificationsAsync() {
 }
 
 export default function App() {
+
   const key = "@FavouriteArtists";
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -108,36 +88,31 @@ export default function App() {
 
   // Notifications
   // eslint-disable-next-line quotes
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [tokens, setTokens] = useState('');
-  const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
-  const responseListener = useRef();
+  const pushNotificationsKey = "@pushKey";
+
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-    // saveToken("Test")
-    // .then((data) => {
-    //   // data.forEach(e => {
-    //   //   if (e.token_id === expoPushToken) {
-    //   //     console.log(expoPushToken + "Ima");
-    //   //   } else {
-    //   //     console.log("nema");
-    //   //   }
-    //   // });
-    //   console.log(data);
-    // })
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
+    registerForPushNotificationsAsync().then(async (token) => {
+      const value = await AsyncStorage.getItem(pushNotificationsKey);
+      if(value === null) {
+        await AsyncStorage.setItem(pushNotificationsKey, token);
+        saveToken(token);
+      };
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      const newObject = {
+        title: notification.request.content.title,
+        body: notification.request.content.body
+      };
+      const fullArray = state.notifications;
+      fullArray.push(newObject);
+      dispatch(createAction(actions.SET_NOTIFICATIONS, fullArray));
     });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
   // End notifications
@@ -202,15 +177,4 @@ export default function App() {
     </StoreContext.Provider >
 
   );
-  // return (
-  //   <View style={{ flex: 1, alignItems: "center", justifyContent: "space-around" }}>
-  //     <Text>Your expo push token: {expoPushToken}</Text>
-  //     <Button
-  //       title="Press to Send Notification"
-  //       onPress={async () => {
-  //         await sendPushNotification(expoPushToken);
-  //       }}
-  //     />
-  //   </View>
-  // );
 }

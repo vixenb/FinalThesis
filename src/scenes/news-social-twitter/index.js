@@ -9,7 +9,7 @@ const NewsSocialTwitter = () => {
     <SafeAreaView style={[
       SharedStyles.layout.flex
     ]}>
-      <WebView source={{ uri: "https://twitter.com/superuho" }}
+      <WebView source={{ uri: "https://twitter.com/zagreb_tourist" }}
         style={SharedStyles.typography.windowWidth} />
     </SafeAreaView>
   );

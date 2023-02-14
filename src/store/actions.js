@@ -4,7 +4,8 @@ export const actions = {
   SET_ARTISTS: "set artists",
   SET_SCHEDULE: "set schedule",
   SET_STAGES: "set stages",
-  SET_FAVOURITES: "set favourites"
+  SET_FAVOURITES: "set favourites",
+  SET_NOTIFICATIONS: "set notifications"
 
 };
 

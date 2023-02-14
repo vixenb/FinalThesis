@@ -9,7 +9,7 @@ const NewsSocialInstagram = () => {
     <SafeAreaView style={[
       SharedStyles.layout.flex
     ]}>
-      <WebView source={{ uri: "https://www.instagram.com/superuho.festival/" }}
+      <WebView source={{ uri: "https://www.instagram.com/zagrebtourist/?hl=hr" }}
         style={SharedStyles.typography.windowWidth} />
     </SafeAreaView>
   );

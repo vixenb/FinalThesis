@@ -1,9 +1,9 @@
 export const laungageEnabled = () => {
-  return false;
+  return true;
 };
 
 export const reminderEnabled = () => {
-  return false;
+  return true;
 };
 
 export const notificationsEnabled = () => {

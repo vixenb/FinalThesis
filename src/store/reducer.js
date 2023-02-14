@@ -45,6 +45,13 @@ export const reducer = (state, action) => {
         schedule: action.payload,
         isLoading: false
       };
+    
+    case actions.SET_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.payload,
+        isLoading: false
+      };
 
     default:
       return state;

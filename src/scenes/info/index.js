@@ -17,7 +17,9 @@ import { Entypo } from "@expo/vector-icons";
 import AppLink from "react-native-app-link";
 import { DeepLink } from "../../helper";
 
-const Info = () => {
+const ticketsLink = "https://ultraeurope.com/tickets/festival/";
+
+const Info = ({navigation}) => {
   const [data, setData] = useState([
     {
       key: "1",
@@ -78,11 +80,13 @@ const Info = () => {
           <Text style={styles.header}>{localization("tickets")}</Text>
           <Text style={styles.subHeader}>
             {localization("getTicket")}
-            <Text onPress={() => { alert("Otvara se link za kupovinu karata"); }}
+            <Text onPress={() => navigation.navigate("WebShopBrowser", {
+              link: ticketsLink
+            })}
               style={{ color: Colors.themeColor().colors.secondaryTextColor, textDecorationLine: "underline" }}>
               {localization("here")}
             </Text>
-          !
+            !
           </Text>
         </View>
         <View>
