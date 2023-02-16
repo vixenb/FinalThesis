@@ -72,6 +72,3 @@ web-build/
 dist/
 
 # @end expo-cli
-
-# Google
-google-services.json
