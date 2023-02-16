@@ -55,7 +55,6 @@ const Schedule = ({ navigation }) => {
         }
       });
     });
-    console.log(formatedEvents);
     return formatedEvents;
   };
 
