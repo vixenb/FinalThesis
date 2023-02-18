@@ -66,6 +66,22 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
+const getToken = async (pushNotificationsKey) => {
+  try {
+    const value = await AsyncStorage.getItem(pushNotificationsKey);
+    if (value !== null) {
+      return;
+    } else {
+      registerForPushNotificationsAsync().then(async (token) => {
+        await AsyncStorage.setItem(pushNotificationsKey, token);
+        saveToken(token);
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function App() {
 
   const key = "@FavouriteArtists";
@@ -93,13 +109,7 @@ export default function App() {
 
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(async (token) => {
-      const value = await AsyncStorage.getItem(pushNotificationsKey);
-      if(value === null) {
-        await AsyncStorage.setItem(pushNotificationsKey, token);
-        saveToken(token);
-      };
-    });
+    getToken(pushNotificationsKey);
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       const newObject = {
@@ -116,7 +126,7 @@ export default function App() {
     };
   }, []);
   // End notifications
-  
+
   const getStages = async () => {
     await Events.getStages()
       .then((json) => {
@@ -157,9 +167,9 @@ export default function App() {
     });
 
     Promise.all([myPromise, promise1, promise2])
-    .then(() => {
-      setIsLoading(false);
-    });
+      .then(() => {
+        setIsLoading(false);
+      });
   }, []);
 
 

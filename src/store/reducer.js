@@ -1,7 +1,6 @@
 import { createContext } from "react";
 
 import { actions } from "./actions";
-// import { initialState } from "./initial-state";
 
 export const StoreContext = createContext(null);
 
