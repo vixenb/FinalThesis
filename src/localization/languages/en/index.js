@@ -54,7 +54,8 @@ const en = {
   festivalSite: "festival site",
   noCurrentData: "No performances on that day",
   nextPerformance: "Next performance:",
-  lastPerformance: "No more performances - last performance:"
+  lastPerformance: "No more performances - last performance:",
+  partners: "Partners"
 
 };
 

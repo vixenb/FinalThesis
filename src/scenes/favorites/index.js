@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Pressable, View, Text, SafeAreaView, StyleSheet, FlatList, Share } from "react-native";
+import { Pressable, View, Text, SafeAreaView, StyleSheet, FlatList, Share, Image } from "react-native";
 import { Entypo, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Localization
@@ -10,45 +10,10 @@ import { Colors, SharedStyles, Typography } from "../../styles";
 import { EmptySpace } from "../../components/molecules";
 import { StoreContext } from "../../store/reducer";
 
-// File System
-import * as FileSystem from "expo-file-system";
 // Components
 import FavouriteArtistItem from "../../components/molecules/favourite-artist";
-// import moment from "moment";
 
-// Expo sharing
-// import * as Sharing from "expo-sharing";
-
-// const formatTime = "HH:mm";
-
-// const Item = ({ title, date, startTime, endTime, stage, img, press }) => (
-
-//   <Pressable
-//     onPress={press}
-//     style={({ pressed }) => [
-//       {
-//         opacity: pressed ? Colors.TOUCHABLE_OPACITY : 1
-//       },
-//       styles.itemContainer
-//     ]}>
-
-//     <View style={styles.rows}>
-//       <View>
-//         <Image source={img} style={styles.boxImage} />
-//       </View>
-//       <View style={styles.secondRow}>
-//         <View style={styles.header}>
-//           <Text style={styles.headerText}>{title}</Text>
-//         </View>
-//         <View style={styles.subHeader}>
-//           <Text style={styles.subHeaderText}>{moment(date).format("dddd")}</Text>
-//           <Text style={styles.subHeaderText}>{moment(startTime).format(formatTime)} - {moment(endTime).format(formatTime)}</Text>
-//           <Text style={styles.subHeaderText}>{stage}</Text>
-//         </View>
-//       </View>
-//     </View>
-//   </Pressable>
-// );
+const exampleImage = require('../../assets/icon.png');
 
 const Favorites = ({ navigation }) => {
   const store = useContext(StoreContext);
@@ -67,29 +32,16 @@ const Favorites = ({ navigation }) => {
       }
     });
     sharedText = shareLabel.slice(0, -1);
+    console.log(shareLabel);
     return favourites;
   };
 
-  const onShare = () => {
+  const onShare = async () => {
     const data = getFavouriteArtists();
-    const img = data[0].image;
 
-    FileSystem.downloadAsync(
-      img,
-      FileSystem.documentDirectory + ".png"
-    )
-      .then(async ({ uri }) => {
-        // Dijeljenje poruke
-        await Share.share({ message: sharedText, url: uri });
+    await Share.share({ message: sharedText, url: exampleImage});
 
-        // Dijeljenje slike izvodjaca
-        //
-        // const options = {
-        //   mimeType: "image/png",
-        //   dialogTitle: "Super Uho!"
-        // };
-        // await Sharing.shareAsync(uri, options);
-      });
+
   };
 
   const rendererItem = ({ item }) => {

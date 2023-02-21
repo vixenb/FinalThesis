@@ -7,12 +7,10 @@ import ArtistsStack1 from "./artists-stack";
 import ScheduleStack1 from "./schedule-stack";
 import NewsSocialTopTab from "./news-social-stack";
 import InfoTicketStack from "./info-tickets-stack";
-import MerchStack from "./merch-stack";
 import HomeStack from "./home-stack";
 import MapStack from "./map-stack";
 import MapOverlayStack from "./map-overlay-stack";
 import MapRestrictedStack from "./map-restricted-stack";
-import PartnersStack from "./partners-stack";
 
 //  Import components
 import DefaultDrawer from "../components/molecules/custom-drawer";
@@ -91,16 +89,6 @@ const rootNavigator = () => {
           name="InfoTickets"
           component={InfoTicketStack}
           options={{ title: localization("infoTickets") }}
-        />
-        <Drawer.Screen
-          name="Merch"
-          component={MerchStack}
-          options={{ title: localization("merch") }}
-        />
-        <Drawer.Screen
-          name="Partners"
-          component={PartnersStack}
-          options={{ title: localization("partners") }}
         />
       </Drawer.Navigator>
     </NavigationContainer>

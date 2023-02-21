@@ -54,7 +54,8 @@ const hr = {
   festivalSite: "festivalskoj stranici",
   noCurrentData: "Nema nastupa za taj dan",
   nextPerformance: "Slijedeći nastup:",
-  lastPerformance: "Nema sljedećeg nastupa - zadnji nastup:"
+  lastPerformance: "Nema sljedećeg nastupa - zadnji nastup:",
+  partners: "Partneri"
 
 };
 

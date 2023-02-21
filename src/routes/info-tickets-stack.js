@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Info from "../scenes/info";
 import Header from "../shared/header";
+import Browser from "../scenes/browser";
 
 //  Styles
 import { Colors, SharedStyles, Typography } from "../styles";
@@ -43,6 +44,24 @@ const InfoticketsStack = () => {
                   style={SharedStyles.typography.rightHeaderIcon} />
               }
             />
+        })}
+      />
+      <Stack.Screen
+        name="WebShopBrowser"
+        component={Browser}
+        options={({ navigation }) => ({
+          headerTitle: () =>
+            <Header
+              LeftIcon={
+                <MaterialIcons
+                  name="navigate-before"
+                  size={Typography.FONT_SIZE_TITLE_MD * 1.5}
+                  onPress={() => navigation.goBack()}
+                  style={SharedStyles.typography.leftHeaderIcon}
+                />
+              }
+            />,
+          headerLeft: null
         })}
       />
     </Stack.Navigator>
