@@ -4,5 +4,6 @@ export const initialState = {
   stages: [],
   schedule: [],
   favouriteArtists: [],
-  notifications: []
+  notifications: [],
+  card: null
 };

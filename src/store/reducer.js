@@ -44,11 +44,17 @@ export const reducer = (state, action) => {
         schedule: action.payload,
         isLoading: false
       };
-    
+
     case actions.SET_NOTIFICATIONS:
       return {
         ...state,
         notifications: action.payload,
+        isLoading: false
+      };
+    case actions.SET_USER_CARD:
+      return {
+        ...state,
+        card: action.payload,
         isLoading: false
       };
 

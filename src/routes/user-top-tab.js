@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 import FavStack from "../scenes/favorites";
 import NotifStack from "../scenes/notifications";
+import UserCardStack from "../scenes/userCard";
 
 // Localization
 import { localization } from "../localization";
@@ -53,6 +54,11 @@ const UserTopTab = () => {
         name="Notif"
         component={NotifStack}
         options={{ tabBarLabel: localization("notifications") }}
+      />
+      <Tab.Screen
+        name="UserCard"
+        component={UserCardStack}
+        options={{ tabBarLabel: localization("ticket") }}
       />
     </Tab.Navigator>
   );

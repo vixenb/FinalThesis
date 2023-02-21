@@ -55,7 +55,8 @@ const en = {
   noCurrentData: "No performances on that day",
   nextPerformance: "Next performance:",
   lastPerformance: "No more performances - last performance:",
-  partners: "Partners"
+  partners: "Partners",
+  ticket: "Ticket"
 
 };
 

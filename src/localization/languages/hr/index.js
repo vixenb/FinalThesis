@@ -55,7 +55,8 @@ const hr = {
   noCurrentData: "Nema nastupa za taj dan",
   nextPerformance: "Slijedeći nastup:",
   lastPerformance: "Nema sljedećeg nastupa - zadnji nastup:",
-  partners: "Partneri"
+  partners: "Partneri",
+  ticket: "Ulaznica"
 
 };
 

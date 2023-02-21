@@ -5,7 +5,8 @@ export const actions = {
   SET_SCHEDULE: "set schedule",
   SET_STAGES: "set stages",
   SET_FAVOURITES: "set favourites",
-  SET_NOTIFICATIONS: "set notifications"
+  SET_NOTIFICATIONS: "set notifications",
+  SET_USER_CARD: "set card"
 
 };
 
