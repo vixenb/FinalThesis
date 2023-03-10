@@ -46,7 +46,8 @@
     "react-native-tab-view": "^3.3.0",
     "react-native-web": "~0.18.10",
     "react-native-webview": "11.23.0",
-    "react-native-week-view": "^0.2.0"
+    "react-native-week-view": "^0.2.0",
+    "expo-location": "~14.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

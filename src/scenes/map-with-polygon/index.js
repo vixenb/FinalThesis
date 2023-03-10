@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -8,8 +8,10 @@ import {
   Text,
   Pressable,
   ScrollView,
+  Platform
 } from "react-native";
 
+import * as Location from 'expo-location';
 //Styles
 import { Colors, SharedStyles, Typography } from "../../styles";
 
@@ -289,6 +291,33 @@ const camp = [
 
 const MapOverlay = () => {
   const [categorySelected, setCategorySelected] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+ const [marker, setMarker] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      let lat;
+      let long;
+      let object;
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        console.log(errorMsg);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      // lat = Number(JSON.stringify(location.coords.latitude));
+      // long = Number(JSON.stringify(location.coords.longitude));
+      lat = 43.712628;
+      long = 15.903729;
+      object= { lat: lat, lng: long, title: "Moja lokacija"};
+      setMarker(object);
+      console.log(marker);
+    })();
+  }, []);
 
   const renderAllMarkers = (m, index) => {
     switch (m.kat_id) {
@@ -559,6 +588,11 @@ const MapOverlay = () => {
             <Text>PARKING</Text>
           </Marker>
 
+          <CustomMarker
+              marker={marker}
+              color={Colors.themeColor().colors.parkingPin}
+              image={require("../../assets/images/icons/myLocation.png")}
+            />
           <Polygon
             strokeColor={Colors.themeColor().colors.mapPolygonColor}
             fillColor={Colors.themeColor().colors.transparentPolygonFill}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -7,8 +7,11 @@ import {
   Image,
   Text,
   Pressable,
-  ScrollView
+  ScrollView,
+  Platform
 } from "react-native";
+
+import * as Location from 'expo-location';
 
 // Styles
 import { Colors, SharedStyles, Typography } from "../../styles";
@@ -220,6 +223,25 @@ const eventCoord = {
 
 const Map = () => {
   const [categorySelected, setCategorySelected] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        console.log(errorMsg);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(JSON.stringify(location));
+
+    })();
+  }, []);
 
   const renderAllMarkers = (m, index) => {
     switch (m.kat_id) {
